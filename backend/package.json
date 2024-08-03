@@ -16,8 +16,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
-    "dev": "node index.js",
-    "build": "echo 'No build step needed for backend'"
+    "dev": "node index.js"
   },
   "keywords": [],
   "author": "",
