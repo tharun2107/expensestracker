@@ -5,14 +5,21 @@ const cors = require("cors");
 const morgan = require("morgan");
 const bcrypt = require('bcrypt');
 const UserModel = require("./models/User");
-
+require('dotenv').config()
 const app = express();
-
+const uri=process.env.MONGO_URL
 app.use(express.json());
 app.use(cors());
 app.use(morgan('dev'));
 
-mongoose.connect('mongodb://127.0.0.1:27017/rtfp');
+mongoose.connect(uri)
+  .then(() => {
+      console.log('Connected to MongoDB');
+  })
+  .catch(err => {
+      console.error('Failed to connect to MongoDB', err);
+  });
+  
 
 //signup
 app.post("/usersignup", (req, res) => {
@@ -150,7 +157,7 @@ app.delete('/expenses/:id', async (req, res) => {
 
 // Fetch user profile route
 app.get('/profile/:userId', async (req, res) => {
-    const userId=req.params.userId;
+    const userId = req.params.userId;
     console.log(userId)
     try {
         const user = await UserModel.findById(userId).select('-password');
